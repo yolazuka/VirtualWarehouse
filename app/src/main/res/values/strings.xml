@@ -1,0 +1,69 @@
+<resources>
+    <string name="app_name">MyVirtualWarehouse</string>
+
+    <!--actions -->
+
+    <string name="delete">Delete</string>
+    <string name="edit">Edit Products</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="dummy_data_warning">Dummy data added</string>
+    <string name="insert_dummy_data">Insert Dummy data</string>
+    <string name="empty_warehouse">There is no stock left.</string>
+    <string name="save_warning">Remember to save to update store stock before exiting</string>
+    <string name="supplier_request_warning">Be sure to order the goods to the supplier before editing the warehouse stock</string>
+    <string name="image_change">To change the image of the product select the icon</string>
+    <string name="delete_all">Delete all the items</string>
+    <string name="delete_all_confirmation">Are you sure you want to delete all the products from the list?</string>
+    <string name="deleted_list">The list was deleted!</string>
+
+    <!--warehouse content -->
+
+    <string name="delete_question">Do you want Delete this product?</string>
+    <string name="quantity">Quantity:</string>
+    <string name="order_quantity">Quantity to order:</string>
+    <string name="updating_stock_error">Error Updating Stock</string>
+    <string name="discard_changes">Discard changes</string>
+    <string name="deleting_Error">Error deleting product</string>
+    <string name="fail_at_save_changes">Error by saving the changes</string>
+
+    <!--CATALOG ACTIVITY content -->
+
+    <string name="product_name">Product:</string>
+    <string name="product_price">Price:</string>
+    <string name="product_profile">PRODUCT PROFILE</string>
+    <string name="product_quantity">Quantity:</string>
+    <string name="stock_title">Current Stock: </string>
+    <string name="units">Units </string>
+    <string name="order_to_supplier">Order to supplier >> </string>
+    <string name="no_negativestock_message">Sorry the stock can not be less than zero</string>
+    <string name="updating_error">Unable to update the stock</string>
+    <string name="saved_stock">The stock was saved successfully!</string>
+    <string name="order_before_addingstock">Dont forget to order to the supplier!</string>
+
+    <!--EDITOR ACTIVITY content -->
+
+    <string name="edit_product">EDIT YOUR PRODUCT</string>
+    <string name="new_product_title">NEW PRODUCT</string>
+    <string name="modify_product">MODIFY YOUR PRODUCT</string>
+    <string name="delete_action">Delete</string>
+    <string name="delete_dialog_message">Do you want to delete this product?</string>
+    <string name="delete_message">Your product has been deleted successfully!</string>
+    <string name="delete_error_message">Sorry , unable to delete the product , try again</string>
+    <string name="discard_changes_message">Discard changes?</string>
+    <string name="discard">Discard</string>
+    <string name="carryon_editing">Carry on editing</string>
+    <string name="uncompleted">Some of the fields are empty! Please fill them all</string>
+    <string name="insert_error_message">Sorry , unable to insert the new product , try again</string>
+    <string name="added_ok">The product was successfully created and saved!</string>
+    <string name="error_saving_changes_message">Unable to save the changes</string>
+    <string name="product_edited_ok">Changes were saved!</string>
+    <string name="permission">You need to get permission in order to access to the images</string>
+
+    <!--MAIN ACTIVITY content -->
+
+    <string name="empty_listView_text">The warehouse is empty, \n there are not items to display</string>
+
+
+</resources>
