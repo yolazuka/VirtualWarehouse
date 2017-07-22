@@ -50,4 +50,5 @@ public class ProductDbHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + ProductContract.ProductEntry.TABLE_NAME);
         onCreate(db);
     }
+
 }

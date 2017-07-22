@@ -23,8 +23,11 @@ import com.squareup.picasso.Picasso;
 
 public class ProductCursorAdapter extends CursorAdapter {
 
-    public ProductCursorAdapter(Context context, Cursor c) {
+    private final MainActivity activity;
+
+    public ProductCursorAdapter(MainActivity context, Cursor c) {
         super(context, c, 0);
+        this.activity = context;
     }
 
     @Override
@@ -68,6 +71,7 @@ public class ProductCursorAdapter extends CursorAdapter {
         String displayQuantity = "Stock: " + cursor.getString(quantityColumnIndex);
 
         final Uri currentProductURI = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, id);
+        final long ids = cursor.getLong(cursor.getColumnIndex(ProductContract.ProductEntry._ID));
 
         // Update the new values to the TexViews for the current product.
         textViewName.setText(productName);
@@ -111,6 +115,13 @@ public class ProductCursorAdapter extends CursorAdapter {
                     // If the stock is zero, we will aware the user
                     Toast.makeText(context, "The warehouse is empty !", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                activity.clickOnViewItem(ids);
             }
         });
     }

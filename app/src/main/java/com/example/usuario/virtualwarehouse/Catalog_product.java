@@ -9,7 +9,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -30,30 +29,25 @@ import com.squareup.picasso.Picasso;
 
 public class Catalog_product extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    public Button increaseButton;
 
+    public Button decreaseButton;
+    //Variable for the EditText of the stock
+    public EditText productStock;
     // Quantity of product in our warehouse
     private int quantity = 0;
-
     // requested change of stock
     private boolean requested = false;
-
     // URI string for the product image
     private String productImageURI = "no image";
 
+    //Declare the variables for this activity
     //content Uri for the current product
     private Uri currentProductURI;
-
-    //Declare the variables for this activity
-
     //Variable for the textView of the product name
     private TextView productName;
-
     //Variable for the textView of the product price
     private TextView productPrice;
-
-    //Variable for the EditText of the stock
-    private EditText productStock;
-
     //Variable for the ImageView of the product image
     private ImageView productImage;
 
@@ -64,16 +58,6 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_catalog_product);
-
-        // Setup FAB to open EditorActivity
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Catalog_product.this, Editor_product.class);
-                startActivity(intent);
-            }
-        });
 
         // Link the variables with the layouts id of the xml file (activity_catalog_product.xml)
 
@@ -170,11 +154,11 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
     private void IncreaseStock() {
 
+        quantity = quantity + 1;
         quantity = Integer.parseInt(productStock.getText().toString());
-        int counter = quantity + 1;
+        int counter = quantity;
         String adding = String.valueOf(counter);
         productStock.setText(adding);
-        quantity++;
 
     }
 
@@ -187,11 +171,11 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         } else {
 
+            quantity = quantity - 1;
             quantity = Integer.parseInt(productStock.getText().toString());
-            int counter = quantity - 1;
+            int counter = quantity;
             String adding = String.valueOf(counter);
             productStock.setText(adding);
-            quantity--;
 
         }
 

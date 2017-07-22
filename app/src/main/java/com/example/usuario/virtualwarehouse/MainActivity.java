@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         productListView.setAdapter(mCursorAdapter);
 
 
-        // Listener to direct from the item to the Catalog_product activity
+        // Listener to redirect the item to the Catalog_product activity
 
         productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -182,6 +182,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         };
 
         return new CursorLoader(this, ProductContract.ProductEntry.CONTENT_URI, projection, null, null, null);
+    }
+
+    public void clickOnViewItem(long id) {
+        Intent intent = new Intent(this, Editor_product.class);
+        intent.putExtra("itemId", id);
+        startActivity(intent);
     }
 
     @Override

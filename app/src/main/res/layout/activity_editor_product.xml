@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Editor_product">
 
     <!--GROUP OF VIEWS FOR PRODUCT ( IN EDIT MODE ) -->
 
@@ -85,7 +87,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/product_quantity"
+            android:id="@+id/product_quantity_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -96,14 +98,6 @@
             android:textAllCaps="true"
             android:textSize="16sp" />
 
-
-        <Button
-            android:id="@+id/button_increment"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:textSize="18dp"
-            android:text="+" />
-
         <EditText
             android:id="@+id/quantity_counter"
             android:layout_width="45dp"
@@ -111,12 +105,6 @@
             android:gravity="center_horizontal"
             android:text="0" />
 
-        <Button
-            android:id="@+id/button_decrement"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:textSize="20dp"
-            android:text="-" />
 
     </LinearLayout>
 

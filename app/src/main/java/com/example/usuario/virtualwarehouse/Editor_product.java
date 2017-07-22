@@ -38,33 +38,25 @@ public class Editor_product extends AppCompatActivity
 
     //We declare here the private variables for the loader
 
-    //Loader ID for the current product
-    private static final int CURRENT_PRODUCT_LOADER_ID = 0;
-
-    // content URI for the current product
-    private Uri currentProductURI;
-
-    // EditText for the name of the product
-    private EditText productEditTextName;
-
-    // EditText for the product price
-    private EditText productEditTextPrice;
-
-    // EditText for the stock available
-    private EditText productQuantity;
-
-    // Product image
-    private ImageView productImageView;
-
-    // Default URI for the current image
-    private String currentImageURI = "no image";
-
     // Returned code for the image request
     public static final int IMAGE_RETURNED_CODE = 10;
-
     // Permission request code
     public static final int STORAGE_REQUEST_PERMISSION_CODE = 11;
+    //Loader ID for the current product
+    private static final int CURRENT_PRODUCT_LOADER_ID = 0;
+    public EditText productStock;
 
+    //EditText for the stock counter (entered by typing )
+    // content URI for the current product
+    private Uri currentProductURI;
+    // EditText for the name of the product
+    private EditText productEditTextName;
+    // EditText for the product price
+    private EditText productEditTextPrice;
+    // Product image
+    private ImageView productImageView;
+    // Default URI for the current image
+    private String currentImageURI = "no image";
     // Initial boolean statement to determine if the data changed
     // We initialize it a false.
     private boolean productDataChange = false;
@@ -90,7 +82,7 @@ public class Editor_product extends AppCompatActivity
 
         productEditTextName = (EditText) findViewById(R.id.product_field_name);
         productEditTextPrice = (EditText) findViewById(R.id.product_field_price);
-        productQuantity = (EditText) findViewById(R.id.quantity_counter);
+        productStock = (EditText) findViewById(R.id.quantity_counter);
         productImageView = (ImageView) findViewById(R.id.product_image);
         TextView header = (TextView) findViewById(R.id.header);
 
@@ -104,10 +96,9 @@ public class Editor_product extends AppCompatActivity
             }
         });
 
-
         productEditTextName.setOnTouchListener(mTouchListener);
         productEditTextPrice.setOnTouchListener(mTouchListener);
-        productQuantity.setOnTouchListener(mTouchListener);
+        productStock.setOnTouchListener(mTouchListener);
         productImageView.setOnTouchListener(mTouchListener);
 
         // We set the OnClickLister in order to update the picture when click on the picture
@@ -145,6 +136,7 @@ public class Editor_product extends AppCompatActivity
             getLoaderManager().initLoader(CURRENT_PRODUCT_LOADER_ID, null, this);
         }
     }
+
 
     //The following block of code gives the system the instructions to delete a product
 
@@ -340,7 +332,7 @@ public class Editor_product extends AppCompatActivity
 
         String newName = productEditTextName.getText().toString();
         String newPrice = productEditTextPrice.getText().toString();
-        String newQuantity = productQuantity.getText().toString();
+        String newQuantity = productStock.getText().toString();
 
         // If some of the fields are blanck, show a toast with a warning
 
@@ -513,7 +505,7 @@ public class Editor_product extends AppCompatActivity
 
             productEditTextName.setText(name);
             productEditTextPrice.setText(String.valueOf(price));
-            productQuantity.setText(String.valueOf(quantity));
+            productStock.setText(String.valueOf(quantity));
 
         }
     }
@@ -525,7 +517,7 @@ public class Editor_product extends AppCompatActivity
 
         productEditTextName.setText("");
         productEditTextPrice.setText("");
-        productQuantity.setText("");
+        productStock.setText("");
     }
 
 }
