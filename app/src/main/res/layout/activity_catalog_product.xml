@@ -106,28 +106,33 @@
 
         <Button
             android:id="@+id/button_increment"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:gravity="center_horizontal"
-            android:text="+" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/light_blue"
+            android:text="+"
+            android:textSize="24sp" />
 
         <EditText
             android:id="@+id/quantity_counter"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="65dp"
+            android:layout_height="50dp"
             android:gravity="center_horizontal"
-            android:text="0" />
+            android:inputType="number"
+            android:text="0"
+            android:textSize="23sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/button_decrement"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:gravity="center_horizontal"
-            android:text="-" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/light_blue"
+            android:text="-"
+            android:textSize="29sp" />
 
     </LinearLayout>
 
-    <!--GROUP OF VIEWS FOR QUANTITY -->
+    <!--GROUP OF VIEWS FOR CURRENT STOCK -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -139,7 +144,7 @@
             android:id="@+id/stock_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="bottom"
+            android:layout_gravity="center"
             android:paddingRight="10dp"
             android:text="@string/stock_title" />
 
@@ -147,14 +152,14 @@
             android:id="@+id/stock_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="bottom"
+            android:layout_gravity="center"
             android:paddingLeft="10dp" />
 
         <TextView
             android:id="@+id/units"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="bottom"
+            android:layout_gravity="center"
             android:paddingLeft="10dp"
             android:text="@string/units" />
 
@@ -162,6 +167,7 @@
             android:id="@+id/order_to_supplier"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:gravity="bottom"
             android:paddingLeft="10dp"
             android:text="@string/order_to_supplier" />

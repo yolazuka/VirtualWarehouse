@@ -32,12 +32,16 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
     public Button increaseButton;
 
     public Button decreaseButton;
+
     //Variable for the EditText of the stock
     public EditText productStock;
+
     // Quantity of product in our warehouse
     private int quantity = 0;
+
     // requested change of stock
     private boolean requested = false;
+
     // URI string for the product image
     private String productImageURI = "no image";
 
@@ -241,7 +245,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
                 UpdateStock();
                 return true;
 
-            // If the user clicks the up navigation button
+            // If the user clicks the up navigation button, be back home
             case R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;

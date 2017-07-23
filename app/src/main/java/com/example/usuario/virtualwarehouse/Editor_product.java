@@ -44,11 +44,13 @@ public class Editor_product extends AppCompatActivity
     public static final int STORAGE_REQUEST_PERMISSION_CODE = 11;
     //Loader ID for the current product
     private static final int CURRENT_PRODUCT_LOADER_ID = 0;
-    public EditText productStock;
 
     //EditText for the stock counter (entered by typing )
+    public EditText productStock;
+
     // content URI for the current product
     private Uri currentProductURI;
+
     // EditText for the name of the product
     private EditText productEditTextName;
     // EditText for the product price
@@ -128,7 +130,7 @@ public class Editor_product extends AppCompatActivity
 
         } else {
             // If it got an ID, it means it,s an update so we will overwrite the data, and we will set
-            // a view for the title "
+            // a view for the title "We set the text for " MODIFY THE PRODUCT "
             setTitle(getString(R.string.modify_product));
             header.setVisibility(View.GONE);
 
@@ -136,7 +138,6 @@ public class Editor_product extends AppCompatActivity
             getLoaderManager().initLoader(CURRENT_PRODUCT_LOADER_ID, null, this);
         }
     }
-
 
     //The following block of code gives the system the instructions to delete a product
 
@@ -259,8 +260,7 @@ public class Editor_product extends AppCompatActivity
                 requestPermissions(permisionRequest, STORAGE_REQUEST_PERMISSION_CODE);
             }
         } else {
-            //Estamos en un dispositivo más viejo por lo que no tiene que pedir permisos de tiempo
-            // de ejecución
+
             selectedImage();
         }
     }
