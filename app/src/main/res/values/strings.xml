@@ -34,9 +34,9 @@
     <string name="product_price">Price:</string>
     <string name="product_profile">PRODUCT PROFILE</string>
     <string name="product_quantity">Quantity:</string>
-    <string name="stock_title">Current Stock: </string>
+    <string name="stock_title">CURRENT STOCK: </string>
     <string name="units">Units </string>
-    <string name="order_to_supplier">Order to supplier >> </string>
+    <string name="order_to_supplier">ORDER TO \n SUPPLIER </string>
     <string name="no_negativestock_message">Sorry the stock can not be less than zero</string>
     <string name="updating_error">Unable to update the stock</string>
     <string name="saved_stock">The stock was saved successfully!</string>

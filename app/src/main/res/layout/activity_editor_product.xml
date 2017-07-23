@@ -21,7 +21,8 @@
         android:paddingRight="18dp"
         android:text="@string/edit_product"
         android:textAllCaps="true"
-        android:textSize="16sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +38,8 @@
             android:paddingRight="18dp"
             android:text="@string/product_name"
             android:textAllCaps="true"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/product_field_name"
@@ -64,14 +66,15 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="10dp"
-            android:paddingRight="18dp"
+            android:paddingRight="50dp"
             android:text="@string/product_price"
             android:textAllCaps="true"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/product_field_price"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
@@ -98,7 +101,8 @@
             android:paddingRight="18dp"
             android:text="@string/product_quantity"
             android:textAllCaps="true"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/quantity_counter"

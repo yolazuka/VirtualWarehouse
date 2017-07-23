@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
     android:orientation="vertical">
 
     <!--GROUP OF VIEWS FOR PRODUCT -->
@@ -17,11 +16,13 @@
         android:paddingRight="18dp"
         android:text="@string/product_profile"
         android:textAllCaps="true"
-        android:textSize="16sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -33,7 +34,8 @@
             android:paddingRight="18dp"
             android:text="@string/product_name"
             android:textAllCaps="true"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/product_name"
@@ -51,6 +53,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -62,7 +65,8 @@
             android:paddingRight="18dp"
             android:text="@string/product_price"
             android:textAllCaps="true"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/product_price"
@@ -80,6 +84,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -92,7 +97,8 @@
             android:paddingRight="18dp"
             android:text="@string/product_quantity"
             android:textAllCaps="true"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/product_field_quantity"
@@ -138,6 +144,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
+        android:background="@color/light_blue"
         android:orientation="horizontal">
 
         <TextView
@@ -145,15 +152,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="@string/stock_title" />
+            android:text="@string/stock_title"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/stock_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingLeft="10dp" />
+            android:paddingLeft="10dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/units"
@@ -169,14 +180,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="bottom"
-            android:paddingLeft="10dp"
+            android:paddingLeft="40dp"
             android:text="@string/order_to_supplier" />
 
         <ImageView
             android:id="@+id/button_order_to_supplier"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_add_shopping_cart_black_24dp" />
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_email_black_24dp" />
 
     </LinearLayout>
 

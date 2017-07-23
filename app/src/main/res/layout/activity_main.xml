@@ -8,7 +8,7 @@
     <!-- list view to content all the items-->
 
     <ListView
-        android:id="@+id/list_product"
+        android:id="@+id/list_products"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -23,13 +23,13 @@
 
         <TextView
             android:id="@+id/empty_view_text"
-            android:gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="200dp"
-            android:textSize="23sp"
+            android:gravity="center_horizontal"
             android:text="@string/empty_listView_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:textSize="23sp" />
 
     </RelativeLayout>
 
@@ -37,12 +37,12 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:backgroundTint="@color/blue"
+        android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/floating_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        app:backgroundTint="@color/blue" />
 
 </RelativeLayout>

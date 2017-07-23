@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         // Find the ListView where the list of products will be listed.
-        ListView productListView = (ListView) findViewById(R.id.list_product);
+        ListView productListView = (ListView) findViewById(R.id.list_products);
 
         // Escucha botón flotante para agregar un nuevo producto.
         fab.setOnClickListener(new View.OnClickListener() {
