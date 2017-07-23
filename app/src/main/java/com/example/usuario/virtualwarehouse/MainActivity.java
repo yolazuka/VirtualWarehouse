@@ -58,27 +58,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mCursorAdapter = new ProductCursorAdapter(this, null);
         productListView.setAdapter(mCursorAdapter);
 
-
         // Listener to redirect the item to the Catalog_product activity
 
         productListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-                Intent intent = new Intent(MainActivity.this, Catalog_product.class);
-
                 // Gather the final uri, linking the Content uri + the uri of the current product.
 
                 Uri createdProductURI = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, id);
 
-                //Set the new final URI
-                intent.setData(createdProductURI);
-
-                startActivity(intent);
+                startNewActivity(createdProductURI);
             }
         });
         // We initialize now the loader.
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    private void startNewActivity(Uri uri) {
+        Intent intent = new Intent(this, Catalog_product.class);
+        intent.setData(uri);
+        startActivity(intent);
+
     }
 
     //Method to insert new dummy data

@@ -60,6 +60,9 @@
     <string name="error_saving_changes_message">Unable to save the changes</string>
     <string name="product_edited_ok">Changes were saved!</string>
     <string name="permission">You need to get permission in order to access to the images</string>
+    <string name="name_of_product">Name of the Product</string>
+    <string name="price_of_product">Price</string>
+    <string name="quantity_of_product">Amount of product</string>
 
     <!--MAIN ACTIVITY content -->
 

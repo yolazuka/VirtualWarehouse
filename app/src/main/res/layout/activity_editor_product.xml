@@ -47,6 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
+            android:hint="@string/name_of_product"
             android:inputType="textPersonName"
             android:textAllCaps="true"
             android:textSize="16sp" />
@@ -78,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
+            android:hint="@string/price_of_product"
             android:inputType="number"
             android:textAllCaps="true"
             android:textSize="16sp" />
@@ -109,6 +111,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:gravity="center_horizontal"
+            android:hint="@string/quantity_of_product"
             android:inputType="number"
             android:text="0" />
 
