@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
 
-
     // Now we are going to instruct similar behavior for the dummy data //
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -140,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-
 
     private void deleteAllProducts() {
         int deletedRows = getContentResolver().delete(ProductContract.ProductEntry.CONTENT_URI, null, null);

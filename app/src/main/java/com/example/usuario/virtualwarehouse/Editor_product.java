@@ -176,7 +176,6 @@ public class Editor_product extends AppCompatActivity
         alertDialog.show();
     }
 
-
     //Method with conditional statement to delete the product
 
     private void deleteProduct() {
@@ -203,7 +202,6 @@ public class Editor_product extends AppCompatActivity
 
         // We create now an AlertDialog.Builder and set the message and set the clicks
         // for the choice
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.discard_changes_message);
@@ -353,7 +351,6 @@ public class Editor_product extends AppCompatActivity
         values.put(ProductContract.ProductEntry.COLUMN_PRICE_PRODUCT, newPrice);
         values.put(ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT, newQuantity);
 
-
         // We will understand that there is a new product, if the currentProductURI is null
         //so we set a conditional statement to instruct with the options.
 
@@ -395,7 +392,6 @@ public class Editor_product extends AppCompatActivity
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Lets inflate the menu options from the file edition_menu.xml
@@ -403,7 +399,6 @@ public class Editor_product extends AppCompatActivity
         getMenuInflater().inflate(R.menu.edition_menu, menu);
         return true;
     }
-
 
     //SWITCH the visibility of the options according of the action that
     //the user is trying to do

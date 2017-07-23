@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,8 +22,6 @@ import android.widget.Toast;
 
 import com.example.usuario.virtualwarehouse.data.ProductContract;
 import com.squareup.picasso.Picasso;
-
-import static com.example.usuario.virtualwarehouse.data.ProductProvider.LOG_TAG;
 
 /**
  * Created by Usuario on 22/7/17.
@@ -103,6 +100,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
             public void onClick(View v) {
 
                 IncreaseStock();
+
             }
         });
 
@@ -112,6 +110,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
             public void onClick(View v) {
 
                 DecreaseStock();
+
             }
         });
 
@@ -130,10 +129,9 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
     private void UpdateStock() {
 
-        if ((requested != false) & (orderToSupplierSent = true)) {
+        if (requested) {
 
             String amount = productStock.getText().toString();
-
 
             // We create again a Content Value in order to update the stock data
 
@@ -147,7 +145,6 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
                 // if the value is not null, then update
                 int updatedRow = getContentResolver().update(currentProductURI, values, null, null);
-                Log.v(LOG_TAG, " THE CURRENT PRODUCT WAS UPDATED CORRECTLY ");
 
                 // if the value is null, then inform the user about that
                 if (updatedRow == 0) {
@@ -174,6 +171,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
     private void IncreaseStock() {
 
+        //When pressing the butting we add 1 at the quantity counter
         quantity = Integer.parseInt(quantityToOrderToSupplier.getText().toString());
         int counter = quantity + 1;
         String adding = String.valueOf(counter);
@@ -189,7 +187,6 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         } else {
 
-            quantity = Integer.parseInt(quantityToOrderToSupplier.getText().toString());
             int counter = quantity - 1;
             String adding = String.valueOf(counter);
             quantityToOrderToSupplier.setText(adding);
@@ -232,10 +229,12 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         //When we order to the supplier, we update the current stock
         quantityOrderInt = Integer.valueOf(quantityToOrderToSupplier.getText().toString());
+        quantity = Integer.valueOf(productStock.getText().toString());
         stockAfterOrder = quantity + quantityOrderInt;
         String finalStock = String.valueOf(stockAfterOrder);
         productStock.setText(finalStock);
 
+        requested = true;
     }
 
     @Override

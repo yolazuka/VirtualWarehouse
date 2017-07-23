@@ -65,7 +65,6 @@ public class ProductCursorAdapter extends CursorAdapter {
         Uri productImage = Uri.parse(cursor.getString(imageColumnIndex));
         final String productName = cursor.getString(nameColumnIndex);
         final double productPrice = priceColumnIndex;
-        final double finalPrice = cursor.getDouble(priceColumnIndex);
         String displayPrice = "Price: " + cursor.getString(priceColumnIndex) + " €";
         final int quantity = cursor.getInt(quantityColumnIndex);
         String displayQuantity = "Stock: " + cursor.getString(quantityColumnIndex);
@@ -113,17 +112,11 @@ public class ProductCursorAdapter extends CursorAdapter {
                     context.getContentResolver().notifyChange(currentProductURI, null);
                 } else {
                     // If the stock is zero, we will aware the user
-                    Toast.makeText(context, "The warehouse is empty !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "There is not stock left, order to supplier is required ", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.clickOnViewItem(ids);
-            }
-        });*/
     }
 }
 

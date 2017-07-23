@@ -167,7 +167,6 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-
         <TextView
             android:id="@+id/order_to_supplier"
             android:layout_width="wrap_content"
