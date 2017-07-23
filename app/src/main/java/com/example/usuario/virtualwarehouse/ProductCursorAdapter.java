@@ -118,12 +118,12 @@ public class ProductCursorAdapter extends CursorAdapter {
             }
         });
 
-        view.setOnClickListener(new View.OnClickListener() {
+        /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 activity.clickOnViewItem(ids);
             }
-        });
+        });*/
     }
 }
 

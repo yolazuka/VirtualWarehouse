@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 import com.example.usuario.virtualwarehouse.data.ProductContract;
 import com.squareup.picasso.Picasso;
 
+import static com.example.usuario.virtualwarehouse.data.ProductProvider.LOG_TAG;
+
 /**
  * Created by Usuario on 22/7/17.
  */
@@ -34,6 +37,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
     public Button decreaseButton;
 
     //Variable for the EditText of the stock
+    // it shows the current stock in the warehouse
     public EditText productStock;
 
     // Quantity of product in our warehouse
@@ -41,6 +45,9 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
     // requested change of stock
     private boolean requested = false;
+
+    // order to supplier sent
+    private boolean orderToSupplierSent = false;
 
     // URI string for the product image
     private String productImageURI = "no image";
@@ -54,9 +61,13 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
     private TextView productPrice;
     //Variable for the ImageView of the product image
     private ImageView productImage;
+    //Variable to set with the buttons the quantity to order to the supplier
+    private EditText quantityToOrderToSupplier;
 
     //Variable for the ImageView of the button for the order to the supplier
     private ImageView orderToSupplier;
+
+    private int quantityOrderInt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,14 +78,15 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         productName = (TextView) findViewById(R.id.product_name);
         productPrice = (TextView) findViewById(R.id.product_price);
-        productStock = (EditText) findViewById(R.id.quantity_counter);
+        quantityToOrderToSupplier = (EditText) findViewById(R.id.quantity_counter);
+        productStock = (EditText) findViewById(R.id.stock_amount);
         productImage = (ImageView) findViewById(R.id.add_image);
         orderToSupplier = (ImageView) findViewById(R.id.button_order_to_supplier);
 
-        //Link also the button with the xml file
+        //Link also the buttonS with the xml file
 
-        Button increaseButton = (Button) findViewById(R.id.button_increment);
-        Button decreaseButton = (Button) findViewById(R.id.button_decrement);
+        increaseButton = (Button) findViewById(R.id.button_increment);
+        decreaseButton = (Button) findViewById(R.id.button_decrement);
 
 
         // Intent to initialize the activity in order to determine if it,s edition.
@@ -108,6 +120,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
             @Override
             public void onClick(View v) {
                 requestOrderSupplier();
+                orderToSupplierSent = true;
 
             }
         });
@@ -117,8 +130,10 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
     private void UpdateStock() {
 
-        if (requested != false) {
+        if ((requested != false) & (orderToSupplierSent = true)) {
+
             String amount = productStock.getText().toString();
+
 
             // We create again a Content Value in order to update the stock data
 
@@ -132,6 +147,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
                 // if the value is not null, then update
                 int updatedRow = getContentResolver().update(currentProductURI, values, null, null);
+                Log.v(LOG_TAG, " THE CURRENT PRODUCT WAS UPDATED CORRECTLY ");
 
                 // if the value is null, then inform the user about that
                 if (updatedRow == 0) {
@@ -141,7 +157,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
                     // if the value is not null, then inform the user and go to the main activity
                 } else {
                     Toast.makeText(this, R.string.saved_stock, Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(this, MainActivity.class);
+                    Intent intent = new Intent(Catalog_product.this, MainActivity.class);
                     startActivity(intent);
 
                     finish();
@@ -154,32 +170,29 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
         }
     }
 
-    // Method to Increase stock, invoked on the onclicklistener
+    // Method to Increase stock, invoked above on the onclicklistener
 
     private void IncreaseStock() {
 
-        quantity = quantity + 1;
-        quantity = Integer.parseInt(productStock.getText().toString());
-        int counter = quantity;
+        quantity = Integer.parseInt(quantityToOrderToSupplier.getText().toString());
+        int counter = quantity + 1;
         String adding = String.valueOf(counter);
-        productStock.setText(adding);
+        quantityToOrderToSupplier.setText(adding);
 
     }
 
-
-    // Method to decrease stock, invoked on the onclicklistener
+    // Method to decrease stock, invoked aboce on the onclicklistener
     private void DecreaseStock() {
 
-        if (quantity < 0) {
+        if (quantity < 1) {
             Toast.makeText(this, R.string.no_negativestock_message, Toast.LENGTH_SHORT).show();
 
         } else {
 
-            quantity = quantity - 1;
-            quantity = Integer.parseInt(productStock.getText().toString());
-            int counter = quantity;
+            quantity = Integer.parseInt(quantityToOrderToSupplier.getText().toString());
+            int counter = quantity - 1;
             String adding = String.valueOf(counter);
-            productStock.setText(adding);
+            quantityToOrderToSupplier.setText(adding);
 
         }
 
@@ -193,15 +206,17 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         String price = productPrice.getText().toString();
 
-        String quantityToOrder = productStock.getText().toString();
+        String quantityToOrder = quantityToOrderToSupplier.getText().toString();
+
+        int stockAfterOrder;
 
         // Now we define a builder to include and compose the whole order
 
         StringBuilder builder = new StringBuilder();
-        builder.append("Dear Supplier, please consider the following order: " + " :\n");
+        builder.append("Dear Supplier, please consider the following order: " + "\n");
         builder.append("PRODUCT: " + product + "\n");
-        builder.append("PRICE: " + price + "\n");
-        builder.append("CANTIDAD: " + quantityToOrder + "\n");
+        builder.append("PRICE (per unit): " + price + "\n");
+        builder.append("AMOUNT: " + quantityToOrder + "\n");
 
         String order = builder.toString();
 
@@ -210,10 +225,17 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
         Intent sendOrderIntent = new Intent(Intent.ACTION_SEND);
         sendOrderIntent.setData(Uri.parse("mailto:"));
         sendOrderIntent.setType("text/plain");
-        sendOrderIntent.putExtra(Intent.EXTRA_SUBJECT, "Solicitud Mercancía ");
+        sendOrderIntent.putExtra(Intent.EXTRA_SUBJECT, "Order request from Virtual Warehouse ");
         sendOrderIntent.putExtra(Intent.EXTRA_TEXT, order);
 
         startActivity(sendOrderIntent);
+
+        //When we order to the supplier, we update the current stock
+        quantityOrderInt = Integer.valueOf(quantityToOrderToSupplier.getText().toString());
+        stockAfterOrder = quantity + quantityOrderInt;
+        String finalStock = String.valueOf(stockAfterOrder);
+        productStock.setText(finalStock);
+
     }
 
     @Override

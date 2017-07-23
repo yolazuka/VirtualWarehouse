@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginTop="10dp"
-            android:paddingRight="18dp"
+            android:paddingRight="45dp"
             android:text="@string/product_price"
             android:textAllCaps="true"
             android:textSize="16sp"
@@ -120,7 +120,7 @@
 
         <EditText
             android:id="@+id/quantity_counter"
-            android:layout_width="65dp"
+            android:layout_width="100dp"
             android:layout_height="50dp"
             android:gravity="center_horizontal"
             android:inputType="number"
@@ -157,22 +157,16 @@
             android:text="@string/stock_title"
             android:textStyle="bold" />
 
-        <TextView
+        <EditText
             android:id="@+id/stock_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:inputType="number"
             android:paddingLeft="10dp"
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/units"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:paddingLeft="10dp"
-            android:text="@string/units" />
 
         <TextView
             android:id="@+id/order_to_supplier"
