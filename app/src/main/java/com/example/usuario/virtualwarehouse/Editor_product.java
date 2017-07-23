@@ -3,6 +3,7 @@ package com.example.usuario.virtualwarehouse;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
@@ -133,6 +134,10 @@ public class Editor_product extends AppCompatActivity
             // a view for the title "We set the text for " MODIFY THE PRODUCT "
             setTitle(getString(R.string.modify_product));
             header.setVisibility(View.GONE);
+
+            // We declare the URI of the current product
+            Uri createdProductURI = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI,
+                    ContentUris.parseId(this.currentProductURI));
 
             // Initialize the loader in order to read the data based on the created or updated id
             getLoaderManager().initLoader(CURRENT_PRODUCT_LOADER_ID, null, this);

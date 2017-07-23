@@ -33,12 +33,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Find the ListView where the list of products will be listed.
-        ListView productListView = (ListView) findViewById(R.id.list_product);
-
         // Link the button with the view xml
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        // Find the ListView where the list of products will be listed.
+        ListView productListView = (ListView) findViewById(R.id.list_product);
 
         // Escucha botón flotante para agregar un nuevo producto.
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,10 +69,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 // Gather the final uri, linking the Content uri + the uri of the current product.
 
-                Uri currentProductURI = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, id);
+                Uri createdProductURI = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI, id);
 
                 //Set the new final URI
-                intent.setData(currentProductURI);
+                intent.setData(createdProductURI);
 
                 startActivity(intent);
             }
