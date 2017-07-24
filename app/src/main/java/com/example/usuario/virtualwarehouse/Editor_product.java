@@ -1,6 +1,5 @@
 package com.example.usuario.virtualwarehouse;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentUris;
@@ -9,26 +8,26 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usuario.virtualwarehouse.data.ProductContract;
-import com.squareup.picasso.Picasso;
 
-import java.io.File;
+import static com.example.usuario.virtualwarehouse.R.id.product_image_spinner;
 
 /**
  * Created by Usuario on 22/7/17.
@@ -37,27 +36,35 @@ import java.io.File;
 public class Editor_product extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    //We declare here the private variables for the loader
 
-    // Returned code for the image request
-    public static final int IMAGE_RETURNED_CODE = 10;
-    // Permission request code
-    public static final int STORAGE_REQUEST_PERMISSION_CODE = 11;
     //Loader ID for the current product
     private static final int CURRENT_PRODUCT_LOADER_ID = 0;
 
     //EditText for the stock counter (entered by typing )
     public EditText productStock;
 
-    // content URI for the current product
+    // URI content for the current product
     private Uri currentProductURI;
 
     // EditText for the name of the product
     private EditText productEditTextName;
+
     // EditText for the product price
     private EditText productEditTextPrice;
+
+    private TextView header;
+
     // Product image
     private ImageView productImageView;
+
+    //product image spinner
+
+    private Spinner productImageSpinner;
+
+    //current image
+
+    private String imageType = ProductContract.ProductEntry.IMAGE_TYPE_NONE;
+
     // Default URI for the current image
     private String currentImageURI = "no image";
     // Initial boolean statement to determine if the data changed
@@ -87,7 +94,7 @@ public class Editor_product extends AppCompatActivity
         productEditTextPrice = (EditText) findViewById(R.id.product_field_price);
         productStock = (EditText) findViewById(R.id.quantity_counter);
         productImageView = (ImageView) findViewById(R.id.product_image);
-        TextView header = (TextView) findViewById(R.id.header);
+        header = (TextView) findViewById(R.id.header);
 
         //Check the changes for each view
         productImageView.setOnTouchListener(new View.OnTouchListener() {
@@ -104,12 +111,11 @@ public class Editor_product extends AppCompatActivity
         productStock.setOnTouchListener(mTouchListener);
         productImageView.setOnTouchListener(mTouchListener);
 
-        // We set the OnClickLister in order to update the picture when click on the picture
-
-        productImageView.setOnClickListener(new View.OnClickListener() {
+        // Call a lister to the spinner
+        productImageSpinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateProductImage(v);
+                setImageSpinner();
             }
         });
 
@@ -119,6 +125,7 @@ public class Editor_product extends AppCompatActivity
 
         Intent intent = getIntent();
         currentProductURI = intent.getData();
+
 
         // If the intent does not find a product id, that means that it,s a new product
         // in that case we will set the views for a new product.
@@ -245,97 +252,61 @@ public class Editor_product extends AppCompatActivity
         discardChangesDialog(discardButtonClickListener);
     }
 
-    // Update the picture if we have the permission. We are going to instruct this through
-    //the conditional stament if
+    private void setImageSpinner() {
+        // Create an ArrayAdapter using the string array and a default spinner layout, specify the
+        // layout to use when the list of choices appears and apply the adapter to the spinner.
 
-    public void updateProductImage(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.array_image_type, android.R.layout.simple_spinner_item);
+        productImageSpinner = (Spinner) findViewById(product_image_spinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        productImageSpinner.setAdapter(adapter);
 
-            //We check if we already have permission into the manifest, if so get the image
+        // Set the integer mSelected to the constant values
+        productImageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * Callback method to be invoked when an item in this view has been selected.
+             */
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selection = (String) parent.getItemAtPosition(position);
+                if (!TextUtils.isEmpty(selection)) {
 
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) ==
-                    PackageManager.PERMISSION_GRANTED) {
-                selectedImage();
+                    if (selection.equals(getString(R.string.stationery))) {
+                        // The tourist product is a culture product.
+                        imageType = ProductContract.ProductEntry.IMAGE_STATIONERY;
+                        productImageView.setImageDrawable(getDrawable(R.drawable.stationery));
 
-            } else {
-                // If we dont have permission, we make a request of it.
-                String[] permisionRequest = {Manifest.permission.READ_EXTERNAL_STORAGE};
-                requestPermissions(permisionRequest, STORAGE_REQUEST_PERMISSION_CODE);
+                    } else if (selection.equals(getString(R.string.books))) {
+                        // The tourist product is a hotel.
+                        imageType = ProductContract.ProductEntry.IMAGE_BOOKS;
+                        productImageView.setImageDrawable(getDrawable(R.drawable.books));
+
+                    } else if (selection.equals(getString(R.string.presents))) {
+                        // The tourist product is a leisure product.
+                        imageType = ProductContract.ProductEntry.IMAGE_PRESENTS;
+                        productImageView.setImageDrawable(getDrawable(R.drawable.presents));
+
+                    }
+                }
             }
-        } else {
 
-            selectedImage();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == STORAGE_REQUEST_PERMISSION_CODE && grantResults[0] ==
-                PackageManager.PERMISSION_GRANTED) {
-
-            selectedImage();
-        } else {
-            // Create a toast in order to inform the user
-
-            Toast.makeText(this, R.string.permission, Toast.LENGTH_LONG).show();
-        }
-    }
-
-    //METHOD TO SET UP THE CHOOSEN IMAGE BY THE USER
-
-    private void selectedImage() {
-
-        // We create an intent to call the picking action
-        Intent imagePicker = new Intent(Intent.ACTION_PICK);
-
-        // Get the directory where the pictures are
-
-        File imagePath = Environment.getExternalStoragePublicDirectory
-                (Environment.DIRECTORY_PICTURES);
-        String imageDirectoryPath = imagePath.getPath();
-
-        // Get a URI response from that path
-        Uri data = Uri.parse(imageDirectoryPath);
-
-        // Set the data and type, and select all kind of
-        imagePicker.setDataAndType(data, "image/*");
-
-        // We release the intent in order to get the requested code for the image
-        startActivityForResult(imagePicker, IMAGE_RETURNED_CODE);
-    }
-
-    @Override
-
-    // Here below, we pick the picture and define the currentPhotoURI using a Library
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == IMAGE_RETURNED_CODE && resultCode == RESULT_OK) {
-            if (data != null) {
+            // Because AdapterView is an abstract class, onNothingSelected must be defined.
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                imageType = ProductContract.ProductEntry.IMAGE_TYPE_NONE;
+                productImageView.setImageDrawable(getDrawable(R.drawable.add_image));
             }
-            // We gather the data into a new variable and put it into String
-
-            Uri imageURI = data.getData();
-            currentImageURI = imageURI.toString();
-
-            //Set the choosen image to replace the placeholder into the indicated xml View
-            // I use Picasso library as a helper
-            Picasso.with(this).load(imageURI)
-                    .placeholder(R.drawable.add_image)
-                    .fit()
-                    .into(productImageView);
-        }
+        });
     }
 
     //The following block of code is to create a new product
 
     private void AddNewProduct() {
 
-        //Here we string the values entered by the user
-
         String newName = productEditTextName.getText().toString();
         String newPrice = productEditTextPrice.getText().toString();
-        String newQuantity = productStock.getText().toString();
+        String newQuantity = productStock .getText().toString();
+
 
         // If some of the fields are blanck, show a toast with a warning
 
@@ -346,10 +317,14 @@ public class Editor_product extends AppCompatActivity
         // Create a content value, in order insert all the values and attributes
 
         ContentValues values = new ContentValues();
-        values.put(ProductContract.ProductEntry.COLUMN_IMAGE_PRODUCT, currentImageURI);
+
         values.put(ProductContract.ProductEntry.COLUMN_NAME_PRODUCT, newName);
         values.put(ProductContract.ProductEntry.COLUMN_PRICE_PRODUCT, newPrice);
         values.put(ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT, newQuantity);
+        values.put(ProductContract.ProductEntry.COLUMN_IMAGE_PRODUCT, imageType);
+
+        // Receive the new content URI that will allow us to access database's data in the future.
+        Uri newUri = getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
 
         // We will understand that there is a new product, if the currentProductURI is null
         //so we set a conditional statement to instruct with the options.
@@ -486,20 +461,13 @@ public class Editor_product extends AppCompatActivity
             int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT);
             int imageColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_IMAGE_PRODUCT);
 
-            // Through the library Picasso we are going to update the image.
-
-            Picasso.with(this).load(currentImageURI)
-                    .placeholder(R.drawable.add_image)
-                    .fit()
-                    .into(productImageView);
-
             //Now we are going to get the values of that cursor lecture into data,
             //according to the data type of each column
 
             String name = cursor.getString(nameColumnIndex);
             float price = cursor.getFloat(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
-            currentImageURI = cursor.getString(imageColumnIndex);
+            String image = cursor.getString(imageColumnIndex);
 
             // Once we get the data, we are gonna set the string, or  we are gonna "string" the value of it.
 
@@ -507,7 +475,28 @@ public class Editor_product extends AppCompatActivity
             productEditTextPrice.setText(String.valueOf(price));
             productStock.setText(String.valueOf(quantity));
 
+            //Set the drawable root to the spinner in order to get the image.
+            productImageView.setImageDrawable(getDrawable(getResources().getIdentifier(image, "drawable", getPackageName())));
+
+            switch (image) {
+                case ProductContract.ProductEntry.IMAGE_STATIONERY:
+                    productImageSpinner.setSelection(1);
+                    break;
+
+                case ProductContract.ProductEntry.IMAGE_BOOKS:
+                    productImageSpinner.setSelection(2);
+                    break;
+
+                case ProductContract.ProductEntry.IMAGE_PRESENTS:
+                    productImageSpinner.setSelection(3);
+                    break;
+
+                default:
+                    productImageSpinner.setSelection(0);
+                    break;
+            }
         }
+
     }
 
     //On reset loader, we are going to instruct the cursor to set all the values empty
@@ -518,7 +507,11 @@ public class Editor_product extends AppCompatActivity
         productEditTextName.setText("");
         productEditTextPrice.setText("");
         productStock.setText("");
-    }
 
+        // Reset image and image type spinner.
+        productImageView.setImageDrawable(getDrawable(R.drawable.add_image));
+        productImageSpinner.setSelection(0);
+
+    }
 }
 

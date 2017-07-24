@@ -58,5 +58,12 @@ public class ProductContract {
         public static final String COLUMN_NAME_PRODUCT = "Product_Name";
         public static final String COLUMN_PRICE_PRODUCT = "Product_Price";
         public static final String COLUMN_QUANTITY_PRODUCT = "Product_Quantity";
+
+        // Static values for the image categories
+
+        public static final String IMAGE_TYPE_NONE = "image_type_none";
+        public static final String IMAGE_STATIONERY = "stationery_images";
+        public static final String IMAGE_BOOKS = "books_images";
+        public static final String IMAGE_PRESENTS = "presents_images";
     }
 }

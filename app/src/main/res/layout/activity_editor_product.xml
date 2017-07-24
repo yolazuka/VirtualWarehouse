@@ -117,10 +117,17 @@
 
     </LinearLayout>
 
+    <Spinner
+        android:id="@+id/product_image_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:prompt="@string/select_image"
+        android:spinnerMode="dropdown" />
+
     <ImageView
         android:id="@+id/product_image"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="50dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="40dp"

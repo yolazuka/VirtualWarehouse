@@ -15,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usuario.virtualwarehouse.data.ProductContract;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by Usuario on 22/7/17.
@@ -47,22 +46,20 @@ public class ProductCursorAdapter extends CursorAdapter {
         TextView textViewName = (TextView) view.findViewById(R.id.product_name_listItems);
         TextView textViewPrice = (TextView) view.findViewById(R.id.price_listItems);
         TextView textViewQuantity = (TextView) view.findViewById(R.id.quantity_listItems);
-
-        ImageView imageViewImage = (ImageView) view.findViewById(R.id.product_image);
-
         ImageView shoppingButton = (ImageView) view.findViewById(R.id.shopping_button);
+        ImageView productImageView = (ImageView) view.findViewById(R.id.product_image);
 
         // Find the columns of the database, and link it with the Sqlite variables previously declared
 
         int nameColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_NAME_PRODUCT);
         final int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRICE_PRODUCT);
         int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT);
-        int imageColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_IMAGE_PRODUCT);
+        String image = cursor.getString(cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_IMAGE_PRODUCT));
+        productImageView.setImageDrawable(context.getDrawable(context.getResources().getIdentifier(image, "drawable", context.getPackageName())));
 
         // Now we are going to get the strings from these attributes through the cursor
 
         int id = cursor.getInt(cursor.getColumnIndex(ProductContract.ProductEntry._ID));
-        Uri productImage = Uri.parse(cursor.getString(imageColumnIndex));
         final String productName = cursor.getString(nameColumnIndex);
         final double productPrice = priceColumnIndex;
         String displayPrice = "Price: " + cursor.getString(priceColumnIndex) + " €";
@@ -76,14 +73,6 @@ public class ProductCursorAdapter extends CursorAdapter {
         textViewName.setText(productName);
         textViewPrice.setText(displayPrice);
         textViewQuantity.setText(displayQuantity);
-
-        // As I did in my booklisting app, I,ll use the library picasso to insert the images.
-
-        Picasso.with(context).load(productImage)
-                .placeholder(R.drawable.add_image)
-
-                .fit()
-                .into(imageViewImage);
 
         // We set the instructions when the user cliks the shopping button
 
@@ -119,4 +108,7 @@ public class ProductCursorAdapter extends CursorAdapter {
 
     }
 }
+
+
+
 

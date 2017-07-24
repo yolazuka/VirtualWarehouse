@@ -63,6 +63,13 @@
     <string name="name_of_product">Name of the Product</string>
     <string name="price_of_product">Price</string>
     <string name="quantity_of_product">Amount of product</string>
+    <string name="select_image">Select Image</string>
+
+    <!--TYPE OF IMAGES  -->
+
+    <string name="stationery">Stationery</string>
+    <string name="books">Books</string>
+    <string name="presents">Presents</string>
 
     <!--MAIN ACTIVITY content -->
 

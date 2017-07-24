@@ -21,7 +21,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.usuario.virtualwarehouse.data.ProductContract;
-import com.squareup.picasso.Picasso;
 
 /**
  * Created by Usuario on 22/7/17.
@@ -36,22 +35,17 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
     //Variable for the EditText of the stock
     // it shows the current stock in the warehouse
     public EditText productStock;
-
+    // order to supplier sent
+    public boolean orderToSupplierSent = false;
+    //content Uri for the current product
+    public Uri currentProductURI;
     // Quantity of product in our warehouse
     private int quantity = 0;
 
+    /* URI string for the product image
+    public String productImageURI = "no image";*/
     // requested change of stock
     private boolean requested = false;
-
-    // order to supplier sent
-    private boolean orderToSupplierSent = false;
-
-    // URI string for the product image
-    private String productImageURI = "no image";
-
-    //Declare the variables for this activity
-    //content Uri for the current product
-    private Uri currentProductURI;
     //Variable for the textView of the product name
     private TextView productName;
     //Variable for the textView of the product price
@@ -84,7 +78,6 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         increaseButton = (Button) findViewById(R.id.button_increment);
         decreaseButton = (Button) findViewById(R.id.button_decrement);
-
 
         // Intent to initialize the activity in order to determine if it,s edition.
         final Intent intent = getIntent();
@@ -257,7 +250,6 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
             //If the user clicks the edit icon
             case R.id.edit_product_attributes:
                 ChangeProductAttributes();
-
                 finish();
                 return true;
 
@@ -280,7 +272,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         // Intent to release the app to the Editor activity
 
-        Intent intent = new Intent(Catalog_product.this, Editor_product.class);
+        Intent intentChangeAttributes = new Intent(Catalog_product.this, Editor_product.class);
 
         // We declare the URI of the current product
         Uri currentProductURI = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI,
@@ -288,8 +280,8 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         // We set the URI to data through the corresponding method
 
-        intent.setData(currentProductURI);
-        startActivity(intent);
+        intentChangeAttributes.setData(currentProductURI);
+        startActivity(intentChangeAttributes);
         finish();
     }
 
@@ -313,7 +305,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        // Regresa temprano si el cursor es nulo o hay menos de 1 fila en el cursor
+
         if (cursor == null || cursor.getCount() < 1) {
             return;
         }
@@ -333,7 +325,7 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
             String name = cursor.getString(nameColumnIndex);
             float price = cursor.getFloat(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
-            productImageURI = cursor.getString(imageColumnIndex);
+            String image = cursor.getString(imageColumnIndex);
 
             // Set those values and display them on the layouts
 
@@ -341,12 +333,10 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
             productPrice.setText(String.valueOf(price) + " €");
             productStock.setText(String.valueOf(quantity));
 
-            //We update the picture through Picasso
 
-            Picasso.with(this).load(productImageURI)
-                    .placeholder(R.drawable.add_image)
-                    .fit()
-                    .into(productImage);
+            //We set also the picture
+            productImage.setImageDrawable(this.getDrawable(this.getResources().getIdentifier(image, "drawable", this.getPackageName())));
+
         }
     }
 
