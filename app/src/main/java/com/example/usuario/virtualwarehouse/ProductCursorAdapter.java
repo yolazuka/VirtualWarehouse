@@ -47,7 +47,7 @@ public class ProductCursorAdapter extends CursorAdapter {
         TextView textViewPrice = (TextView) view.findViewById(R.id.price_listItems);
         TextView textViewQuantity = (TextView) view.findViewById(R.id.quantity_listItems);
         ImageView shoppingButton = (ImageView) view.findViewById(R.id.shopping_button);
-        ImageView productImageView = (ImageView) view.findViewById(R.id.add_image);
+        ImageView productImageView = (ImageView) view.findViewById(R.id.add);
 
         // Find the columns of the database, and link it with the Sqlite variables previously declared
 

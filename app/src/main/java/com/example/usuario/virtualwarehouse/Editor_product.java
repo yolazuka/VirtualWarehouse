@@ -42,6 +42,8 @@ public class Editor_product extends AppCompatActivity
 
     //EditText for the stock counter (entered by typing )
     public EditText productStock;
+
+
     public Spinner productImageSpinner;
     // URI content for the current product
     private Uri currentProductURI;
@@ -80,6 +82,7 @@ public class Editor_product extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor_product);
+
 
         // We link the variables above created with the corresponding xml Views
 
@@ -135,6 +138,7 @@ public class Editor_product extends AppCompatActivity
             // Initialize the loader in order to read the data based on the created or updated id
             getLoaderManager().initLoader(CURRENT_PRODUCT_LOADER_ID, null, this);
         }
+        setImageSpinner();
     }
 
     //The following block of code gives the system the instructions to delete a product
@@ -308,9 +312,6 @@ public class Editor_product extends AppCompatActivity
         values.put(ProductContract.ProductEntry.COLUMN_PRICE_PRODUCT, newPrice);
         values.put(ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT, newQuantity);
         values.put(ProductContract.ProductEntry.COLUMN_IMAGE_PRODUCT, imageType);
-
-        // Receive the new content URI that will allow us to access database's data in the future.
-        Uri newUri = getContentResolver().insert(ProductContract.ProductEntry.CONTENT_URI, values);
 
         // We will understand that there is a new product, if the currentProductURI is null
         //so we set a conditional statement to instruct with the options.
@@ -499,5 +500,6 @@ public class Editor_product extends AppCompatActivity
         productImageSpinner.setSelection(0);
 
     }
+
 }
 
