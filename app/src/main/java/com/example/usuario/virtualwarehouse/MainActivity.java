@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(ProductContract.ProductEntry.COLUMN_NAME_PRODUCT, "Dummy Product");
         values.put(ProductContract.ProductEntry.COLUMN_PRICE_PRODUCT, "20");
         values.put(ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT, 30);
+        values.put(ProductContract.ProductEntry.COLUMN_IMAGE_PRODUCT, ProductContract.ProductEntry.IMAGE_BOOKS);
 
         // Through the new uri and the contentResolver we insert the data into the table.
 

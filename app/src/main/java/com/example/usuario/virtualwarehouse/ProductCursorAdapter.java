@@ -47,7 +47,7 @@ public class ProductCursorAdapter extends CursorAdapter {
         TextView textViewPrice = (TextView) view.findViewById(R.id.price_listItems);
         TextView textViewQuantity = (TextView) view.findViewById(R.id.quantity_listItems);
         ImageView shoppingButton = (ImageView) view.findViewById(R.id.shopping_button);
-        ImageView productImageView = (ImageView) view.findViewById(R.id.add);
+        ImageView productImageView = (ImageView) view.findViewById(R.id.product_image);
 
         // Find the columns of the database, and link it with the Sqlite variables previously declared
 
@@ -55,7 +55,7 @@ public class ProductCursorAdapter extends CursorAdapter {
         final int priceColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_PRICE_PRODUCT);
         int quantityColumnIndex = cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT);
         String image = cursor.getString(cursor.getColumnIndex(ProductContract.ProductEntry.COLUMN_IMAGE_PRODUCT));
-        /*productImageView.setImageDrawable(context.getDrawable(context.getResources().getIdentifier(image, "drawable", context.getPackageName()))); */
+        productImageView.setImageDrawable(context.getDrawable(context.getResources().getIdentifier(image, "drawable", context.getPackageName())));
 
         // Now we are going to get the strings from these attributes through the cursor
 
