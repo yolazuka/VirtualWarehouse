@@ -333,9 +333,9 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
             productPrice.setText(String.valueOf(price) + " €");
             productStock.setText(String.valueOf(quantity));
 
-
+            // REVISAR ! //
             //We set also the picture
-            productImage.setImageDrawable(this.getDrawable(this.getResources().getIdentifier(image, "drawable", this.getPackageName())));
+           /* productImage.setImageDrawable(this.getDrawable(this.getResources().getIdentifier(image, "drawable", this.getPackageName()))); */
 
         }
     }

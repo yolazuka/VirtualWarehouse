@@ -42,27 +42,20 @@ public class Editor_product extends AppCompatActivity
 
     //EditText for the stock counter (entered by typing )
     public EditText productStock;
-
+    public Spinner productImageSpinner;
     // URI content for the current product
     private Uri currentProductURI;
-
     // EditText for the name of the product
     private EditText productEditTextName;
-
     // EditText for the product price
     private EditText productEditTextPrice;
-
     private TextView header;
 
+    //product image spinner
     // Product image
     private ImageView productImageView;
 
-    //product image spinner
-
-    private Spinner productImageSpinner;
-
     //current image
-
     private String imageType = ProductContract.ProductEntry.IMAGE_TYPE_NONE;
 
     // Default URI for the current image
@@ -95,6 +88,7 @@ public class Editor_product extends AppCompatActivity
         productStock = (EditText) findViewById(R.id.quantity_counter);
         productImageView = (ImageView) findViewById(R.id.product_image);
         header = (TextView) findViewById(R.id.header);
+        productImageSpinner = (Spinner) findViewById(R.id.product_image_spinner);
 
         //Check the changes for each view
         productImageView.setOnTouchListener(new View.OnTouchListener() {
@@ -110,14 +104,6 @@ public class Editor_product extends AppCompatActivity
         productEditTextPrice.setOnTouchListener(mTouchListener);
         productStock.setOnTouchListener(mTouchListener);
         productImageView.setOnTouchListener(mTouchListener);
-
-        // Call a lister to the spinner
-        productImageSpinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setImageSpinner();
-            }
-        });
 
         // We now create a new Intent with 2 available paths. We will do this through
         // a conditional statement to determine if the content is new or if it,s an update
@@ -143,7 +129,7 @@ public class Editor_product extends AppCompatActivity
             header.setVisibility(View.GONE);
 
             // We declare the URI of the current product
-            Uri createdProductURI = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI,
+            Uri currentProductURI = ContentUris.withAppendedId(ProductContract.ProductEntry.CONTENT_URI,
                     ContentUris.parseId(this.currentProductURI));
 
             // Initialize the loader in order to read the data based on the created or updated id
