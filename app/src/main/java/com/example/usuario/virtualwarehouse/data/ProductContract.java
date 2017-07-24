@@ -17,7 +17,7 @@ public class ProductContract {
     public static final String CONTENT_AUTHORITY = "com.example.usuario.virtualwarehouse";
 
     /**
-     *  CONTENT_AUTHORITY is used in order to create the URI,S that will connect with the rest of the
+     * CONTENT_AUTHORITY is used in order to create the URI,S that will connect with the rest of the
      * apps into, our out of our device.
      */
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);

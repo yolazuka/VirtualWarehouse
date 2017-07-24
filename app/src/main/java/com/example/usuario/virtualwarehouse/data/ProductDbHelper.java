@@ -39,7 +39,6 @@ public class ProductDbHelper extends SQLiteOpenHelper {
                 + ProductContract.ProductEntry.COLUMN_PRICE_PRODUCT + " REAL NOT NULL, "
                 + ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT + " INTEGER DEFAULT 0);";
 
-
         // Execute the above declared
         db.execSQL(SQL_CREATE_PRODUCT_TABLE);
     }

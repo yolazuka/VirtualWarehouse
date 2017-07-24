@@ -113,7 +113,6 @@ public class ProductProvider extends ContentProvider {
         }
     }
 
-
     //In this following block of code we are going to insert a new product, getting as
     //a result the values and the URI id of that new product.
 

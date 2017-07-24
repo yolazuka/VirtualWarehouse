@@ -337,7 +337,6 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
         }
     }
 
-
     // On reset we set all the fields blanck
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {

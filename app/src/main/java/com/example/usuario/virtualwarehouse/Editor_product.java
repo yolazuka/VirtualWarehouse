@@ -83,7 +83,6 @@ public class Editor_product extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editor_product);
 
-
         // We link the variables above created with the corresponding xml Views
 
         productEditTextName = (EditText) findViewById(R.id.product_field_name);
@@ -140,7 +139,6 @@ public class Editor_product extends AppCompatActivity
         }
         setImageSpinner();
     }
-
     //The following block of code gives the system the instructions to delete a product
 
     private void showDeleteConfirmationDialog() {
@@ -295,7 +293,7 @@ public class Editor_product extends AppCompatActivity
 
         String newName = productEditTextName.getText().toString();
         String newPrice = productEditTextPrice.getText().toString();
-        String newQuantity = productStock .getText().toString();
+        String newQuantity = productStock.getText().toString();
 
 
         // If some of the fields are blanck, show a toast with a warning

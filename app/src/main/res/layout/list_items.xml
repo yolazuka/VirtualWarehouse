@@ -56,14 +56,14 @@
         android:orientation="horizontal">
 
         <ImageView
-        android:id="@+id/shopping_button"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="40dp"
+            android:id="@+id/shopping_button"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="40dp"
             android:focusable="false"
             android:focusableInTouchMode="false"
-        android:src="@drawable/ic_add_shopping_cart_black_24dp" />
+            android:src="@drawable/ic_add_shopping_cart_black_24dp" />
 
     </LinearLayout>
 
