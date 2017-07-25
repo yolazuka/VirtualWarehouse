@@ -61,7 +61,7 @@ public class ProductContract {
 
         // Static values for the image categories
 
-        public static final String IMAGE_TYPE_NONE = "books";
+        public static final String IMAGE_TYPE_NONE = "add_image";
         public static final String IMAGE_STATIONERY = "stationery";
         public static final String IMAGE_BOOKS = "books";
         public static final String IMAGE_PRESENTS = "presents";

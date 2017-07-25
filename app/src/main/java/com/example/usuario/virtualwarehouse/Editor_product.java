@@ -27,8 +27,6 @@ import android.widget.Toast;
 
 import com.example.usuario.virtualwarehouse.data.ProductContract;
 
-import static com.example.usuario.virtualwarehouse.R.id.product_image_spinner;
-
 /**
  * Created by Usuario on 22/7/17.
  */
@@ -107,6 +105,8 @@ public class Editor_product extends AppCompatActivity
         productStock.setOnTouchListener(mTouchListener);
         productImageView.setOnTouchListener(mTouchListener);
 
+        setImageSpinner();
+
         // We now create a new Intent with 2 available paths. We will do this through
         // a conditional statement to determine if the content is new or if it,s an update
         // from an existing product.
@@ -137,7 +137,6 @@ public class Editor_product extends AppCompatActivity
             // Initialize the loader in order to read the data based on the created or updated id
             getLoaderManager().initLoader(CURRENT_PRODUCT_LOADER_ID, null, this);
         }
-        setImageSpinner();
     }
     //The following block of code gives the system the instructions to delete a product
 
@@ -245,7 +244,6 @@ public class Editor_product extends AppCompatActivity
         // layout to use when the list of choices appears and apply the adapter to the spinner.
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.array_image_type, android.R.layout.simple_spinner_item);
-        productImageSpinner = (Spinner) findViewById(product_image_spinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         productImageSpinner.setAdapter(adapter);
 
@@ -258,22 +256,24 @@ public class Editor_product extends AppCompatActivity
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String selection = (String) parent.getItemAtPosition(position);
                 if (!TextUtils.isEmpty(selection)) {
-
                     if (selection.equals(getString(R.string.stationery))) {
-                        // The tourist product is a culture product.
+                        // The product is a stationery.
                         imageType = ProductContract.ProductEntry.IMAGE_STATIONERY;
                         productImageView.setImageDrawable(getDrawable(R.drawable.stationery));
 
                     } else if (selection.equals(getString(R.string.books))) {
-                        // The tourist product is a hotel.
+                        // The product is a book.
                         imageType = ProductContract.ProductEntry.IMAGE_BOOKS;
                         productImageView.setImageDrawable(getDrawable(R.drawable.books));
 
                     } else if (selection.equals(getString(R.string.presents))) {
-                        // The tourist product is a leisure product.
+                        // The product is a present.
                         imageType = ProductContract.ProductEntry.IMAGE_PRESENTS;
                         productImageView.setImageDrawable(getDrawable(R.drawable.presents));
-
+                    } else {
+                        // Default.
+                        imageType = ProductContract.ProductEntry.IMAGE_TYPE_NONE;
+                        productImageView.setImageDrawable(getDrawable(R.drawable.add_image));
                     }
                 }
             }
@@ -329,6 +329,9 @@ public class Editor_product extends AppCompatActivity
                 //Show a toast confirmation if the product is added
 
                 Toast.makeText(this, R.string.added_ok, Toast.LENGTH_LONG).show();
+                Intent goToMain = new Intent(this, MainActivity.class);
+                startActivity(goToMain);
+                finish();
             }
         } else {
 
@@ -348,6 +351,7 @@ public class Editor_product extends AppCompatActivity
                 Toast.makeText(this, R.string.product_edited_ok, Toast.LENGTH_LONG).show();
                 Intent addedOkIntent = new Intent(this, MainActivity.class);
                 startActivity(addedOkIntent);
+                finish();
             }
         }
     }
@@ -392,7 +396,6 @@ public class Editor_product extends AppCompatActivity
             case R.id.saved_product:
                 // We saved the product and we add it straight away into the list
                 AddNewProduct();
-                finish();
                 return true;
 
             case R.id.delete_product:
@@ -462,7 +465,6 @@ public class Editor_product extends AppCompatActivity
 
             //Set the drawable root to the spinner in order to get the image.
             productImageView.setImageDrawable(getDrawable(getResources().getIdentifier(image, "drawable", getPackageName())));
-
             switch (image) {
                 case ProductContract.ProductEntry.IMAGE_STATIONERY:
                     productImageSpinner.setSelection(1);
@@ -481,7 +483,6 @@ public class Editor_product extends AppCompatActivity
                     break;
             }
         }
-
     }
 
     //On reset loader, we are going to instruct the cursor to set all the values empty
@@ -500,4 +501,3 @@ public class Editor_product extends AppCompatActivity
     }
 
 }
-

@@ -1,6 +1,7 @@
 package com.example.usuario.virtualwarehouse;
 
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.CursorLoader;
@@ -28,19 +29,21 @@ import com.example.usuario.virtualwarehouse.data.ProductContract;
 
 public class Catalog_product extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public Button increaseButton;
-
-    public Button decreaseButton;
+    private Button increaseStockButton;
+    private Button decreaseStockButton;
+    private Button increaseOrderButton;
+    private Button decreaseOrderButton;
 
     //Variable for the EditText of the stock
     // it shows the current stock in the warehouse
-    public EditText productStock;
+    private EditText productStock;
     // order to supplier sent
-    public boolean orderToSupplierSent = false;
+    private boolean orderToSupplierSent = false;
     //content Uri for the current product
-    public Uri currentProductURI;
+    private Uri currentProductURI;
     // Quantity of product in our warehouse
-    private int quantity = 0;
+    private int orderQuantity = 0;
+    private int stockQuantity = 0;
 
     /* URI string for the product image
     public String productImageURI = "no image";*/
@@ -52,8 +55,10 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
     private TextView productPrice;
     //Variable for the ImageView of the product image
     private ImageView productImage;
-    //Variable to set with the buttons the quantity to order to the supplier
+    //Variable to set with the buttons the orderQuantity to order to the supplier
     private EditText quantityToOrderToSupplier;
+    private EditText quantityInStock;
+
 
     //Variable for the ImageView of the button for the order to the supplier
     private ImageView orderToSupplier;
@@ -70,14 +75,17 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
         productName = (TextView) findViewById(R.id.product_name);
         productPrice = (TextView) findViewById(R.id.product_price);
         quantityToOrderToSupplier = (EditText) findViewById(R.id.quantity_counter);
+        quantityInStock = (EditText) findViewById(R.id.stock_amount);
         productStock = (EditText) findViewById(R.id.stock_amount);
         productImage = (ImageView) findViewById(R.id.add_image);
         orderToSupplier = (ImageView) findViewById(R.id.button_order_to_supplier);
 
         //Link also the buttonS with the xml file
 
-        increaseButton = (Button) findViewById(R.id.button_increment);
-        decreaseButton = (Button) findViewById(R.id.button_decrement);
+        increaseStockButton = (Button) findViewById(R.id.button_stock_increment);
+        decreaseStockButton = (Button) findViewById(R.id.button_stock_decrement);
+        increaseOrderButton = (Button) findViewById(R.id.button_order_increment);
+        decreaseOrderButton = (Button) findViewById(R.id.button_order_decrement);
 
         // Intent to initialize the activity in order to determine if it,s edition.
         final Intent intent = getIntent();
@@ -87,23 +95,35 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         getLoaderManager().initLoader(0, null, this);
 
-        // Listener to the execute the increasing stock
-        increaseButton.setOnClickListener(new View.OnClickListener() {
+        // Listener to the execute the increasing stock.
+        increaseStockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 IncreaseStock();
-
             }
         });
 
         // Listener to the execute the decreasing stock.
-        decreaseButton.setOnClickListener(new View.OnClickListener() {
+        decreaseStockButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DecreaseStock();
+            }
+        });
 
+        // Listener to the execute the increasing order.
+        increaseOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IncreaseOrder();
+            }
+        });
+
+        // Listener to the execute the decreasing order.
+        decreaseOrderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DecreaseOrder();
             }
         });
 
@@ -155,32 +175,89 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
             }
         } else {
 
-            Toast.makeText(this, R.string.order_before_addingstock, Toast.LENGTH_LONG).show();
+            finish();
 
         }
     }
 
-    // Method to Increase stock, invoked above on the onclicklistener
+    // Method to Increase stock orderQuantity, invoked above on the onclicklistener.
 
     private void IncreaseStock() {
 
-        //When pressing the butting we add 1 at the quantity counter
-        quantity = Integer.parseInt(quantityToOrderToSupplier.getText().toString());
-        int counter = quantity + 1;
+        //When pressing the butting we add 1 at the orderQuantity counter
+        stockQuantity = Integer.parseInt(quantityInStock.getText().toString());
+        int counter = stockQuantity + 1;
+        String adding = String.valueOf(counter);
+        quantityInStock.setText(adding);
+
+        ContentResolver resolver = getContentResolver();
+        ContentValues values = new ContentValues();
+
+        values.put(ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT, counter);
+        resolver.update(
+                currentProductURI,
+                values,
+                null,
+                null
+        );
+
+        //and call the ContentResolver to notify the stock amount changes.
+
+        getContentResolver().notifyChange(currentProductURI, null);
+
+    }
+
+    // Method to decrease stock orderQuantity, invoked aboce on the onclicklistener.
+    private void DecreaseStock() {
+
+        stockQuantity = Integer.parseInt(quantityInStock.getText().toString());
+        if (stockQuantity < 1) {
+            Toast.makeText(this, R.string.no_negativestock_message, Toast.LENGTH_SHORT).show();
+
+        } else {
+
+            int counter = stockQuantity - 1;
+            String adding = String.valueOf(counter);
+            quantityInStock.setText(adding);
+
+            ContentResolver resolver = getContentResolver();
+            ContentValues values = new ContentValues();
+
+            values.put(ProductContract.ProductEntry.COLUMN_QUANTITY_PRODUCT, counter);
+            resolver.update(
+                    currentProductURI,
+                    values,
+                    null,
+                    null
+            );
+
+            //and call the ContentResolver to notify the stock amount changes.
+
+            getContentResolver().notifyChange(currentProductURI, null);
+        }
+    }
+
+    // Method to Increase order orderQuantity, invoked above on the onclicklistener.
+
+    private void IncreaseOrder() {
+
+        //When pressing the butting we add 1 at the orderQuantity counter
+        orderQuantity = Integer.parseInt(quantityToOrderToSupplier.getText().toString());
+        int counter = orderQuantity + 1;
         String adding = String.valueOf(counter);
         quantityToOrderToSupplier.setText(adding);
 
     }
 
-    // Method to decrease stock, invoked aboce on the onclicklistener
-    private void DecreaseStock() {
+    // Method to decrease order orderQuantity, invoked aboce on the onclicklistener.
+    private void DecreaseOrder() {
 
-        if (quantity < 1) {
+        if (orderQuantity < 1) {
             Toast.makeText(this, R.string.no_negativestock_message, Toast.LENGTH_SHORT).show();
 
         } else {
 
-            int counter = quantity - 1;
+            int counter = orderQuantity - 1;
             String adding = String.valueOf(counter);
             quantityToOrderToSupplier.setText(adding);
 
@@ -222,8 +299,8 @@ public class Catalog_product extends AppCompatActivity implements LoaderManager.
 
         //When we order to the supplier, we update the current stock
         quantityOrderInt = Integer.valueOf(quantityToOrderToSupplier.getText().toString());
-        quantity = Integer.valueOf(productStock.getText().toString());
-        stockAfterOrder = quantity + quantityOrderInt;
+        orderQuantity = Integer.valueOf(productStock.getText().toString());
+        stockAfterOrder = orderQuantity + quantityOrderInt;
         String finalStock = String.valueOf(stockAfterOrder);
         productStock.setText(finalStock);
 

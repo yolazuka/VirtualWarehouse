@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="array_image_type">
+        <item>@string/none</item>
         <item>@string/stationery</item>
         <item>@string/books</item>
         <item>@string/presents</item>

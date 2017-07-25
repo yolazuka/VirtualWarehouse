@@ -67,6 +67,7 @@
 
     <!--TYPE OF IMAGES  -->
 
+    <string name="none">Select image</string>
     <string name="stationery">Stationery</string>
     <string name="books">Books</string>
     <string name="presents">Presents</string>
